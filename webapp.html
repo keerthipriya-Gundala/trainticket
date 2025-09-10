@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IRCTC Ticket Booking</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .full-width {
+      grid-column: span 2;
+      text-align: center;
+    }
+
+    button {
+      background-color: #0066cc;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #004999;
+    }
+
+    .results {
+      margin-top: 40px;
+    }
+
+    .train-card {
+      background-color: #eef3f7;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-left: 5px solid #0066cc;
+      border-radius: 5px;
+    }
+
+    .train-card h4 {
+      margin: 0 0 10px 0;
+      color: #003366;
+    }
+
+    .train-card p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>IRCTC Ticket Booking</h1>
+  </header>
+
+  <div class="container">
+    <h2>Book Your Train</h2>
+
+    <form id="bookingForm">
+      <div>
+        <label for="source">From</label>
+        <input type="text" id="source" placeholder="Enter source station" required />
+      </div>
+
+      <div>
+        <label for="destination">To</label>
+        <input type="text" id="destination" placeholder="Enter destination station" required />
+      </div>
+
+      <div>
+        <label for="date">Travel Date</label>
+        <input type="date" id="date" required />
+      </div>
+
+      <div>
+        <label for="class">Class</label>
+        <select id="class">
+          <option value="Sleeper">Sleeper</option>
+          <option value="AC 3 Tier">AC 3 Tier</option>
+          <option value="AC 2 Tier">AC 2 Tier</option>
+          <option value="AC 1 Tier">AC 1 Tier</option>
+          <option value="Second Seating">Second Seating</option>
+        </select>
+      </div>
+
+      <div class="full-width">
+        <button type="submit">Search Trains</button>
+      </div>
+    </form>
+
+    <div class="results" id="results"></div>
+  </div>
+
+  <script>
+    const sampleTrains = [
+      { name: "Rajdhani Express", number: "12301", time: "10:00 AM", seats: 20 },
+      { name: "Shatabdi Express", number: "12001", time: "2:00 PM", seats: 12 },
+      { name: "Garib Rath", number: "12910", time: "5:30 PM", seats: 8 },
+    ];
+
+    const form = document.getElementById("bookingForm");
+    const resultsDiv = document.getElementById("results");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const source = document.getElementById("source").value;
+      const destination = document.getElementById("destination").value;
+      const date = document.getElementById("date").value;
+      const travelClass = document.getElementById("class").value;
+
+      resultsDiv.innerHTML = <h3>Available Trains from ${source} to ${destination} on ${date} (${travelClass})</h3>;
+
+      sampleTrains.forEach(train => {
+        const trainEl = document.createElement("div");
+        trainEl.className = "train-card";
+        trainEl.innerHTML = `
+          <h4>${train.name} (${train.number})</h4>
+          <p>Departure Time: ${train.time}</p>
+          <p>Seats Available: ${train.seats}</p>
+        `;
+        resultsDiv.appendChild(trainEl);
+      });
+    });
+  </script>
+</body>
+</html>
